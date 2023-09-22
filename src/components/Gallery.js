@@ -13,88 +13,124 @@ import Logo10 from '../assets/image-s2.png';
 import Logo11 from '../assets/image-s3.png';
 import Logo12 from '../assets/image-s4.png';
 import Logo13 from '../assets/image-s5.png';
+import {DragDropContext, Draggable} from 'react-beautiful-dnd'
+import { StrictModeDroppable as Droppable } from '../helpers/StrictModeDroppable';
 
+
+const imageDetails = [
+    {
+        src: Logo,
+        name: "movie",
+        id: 1
+    },
+    {
+        src: Logo1,
+        name: "movie",
+        id: 2
+    },
+    {
+        src: Logo2,
+        name: "movie",
+        id: 3
+    },
+    {
+        src: Logo3,
+        name: "movie",
+        id: 4
+    },
+    {
+        src: Logo4,
+        name: "house",
+        id: 5
+    },
+    {
+        src: Logo5,
+        name: "house",
+        id: 6
+    },
+    {
+        src: Logo6,
+        name: "house",
+        id: 7
+    },
+    {
+        src: Logo7,
+        name: "house",
+        id: 8
+    },
+    {
+        src: Logo8,
+        name: "house",
+        id: 9
+    },
+    {
+        src: Logo9,
+        name: "house",
+        id: 10
+    },
+    {
+        src: Logo10,
+        name: "person",
+        id: 11
+    },
+    {
+        src: Logo11,
+        name: "house",
+        id: 12
+    },
+    {
+        src: Logo12,
+        name: "house",
+        id: 13
+    },
+    {
+        src: Logo13,
+        name: "house",
+        id: 14
+    }
+]
 const Gallery = () => {
-    const [imageDetails, setImageDetails] = useState([
-        {
-            src: Logo,
-            name: "movie"
-        },
-        {
-            src: Logo1,
-            name: "movie"
-        },
-        {
-            src: Logo2,
-            name: "movie"
-        },
-        {
-            src: Logo3,
-            name: "movie"
-        },
-        {
-            src: Logo4,
-            name: "house"
-        },
-        {
-            src: Logo5,
-            name: "house"
-        },
-        {
-            src: Logo6,
-            name: "house"
-        },
-        {
-            src: Logo7,
-            name: "house"
-        },
-        {
-            src: Logo8,
-            name: "house"
-        },
-        {
-            src: Logo9,
-            name: "house"
-        },
-        {
-            src: Logo10,
-            name: "person"
-        },
-        {
-            src: Logo11,
-            name: "house"
-        },
-        {
-            src: Logo12,
-            name: "house"
-        },
-        {
-            src: Logo13,
-            name: "house"
-        }
-    ])
-
+    
+    const [cards, setCards] = useState(imageDetails);
     const [search, setSearch] = useState('')
 
-    console.log(search)
-
-
+    const handleOnDragEnd = (result) => {
+        const items = Array.from(cards);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+    }
   return (
     <div className=''>
         <div className='hero' onChange={(e) => setSearch(e.target.value)}>
             <input type='text' placeholder='search e.g house, movie'/>
         </div>
-        <div className='imageContainer'>
-            {imageDetails.filter(item => {
-                return search.toLowerCase() === '' ? item : item.name.toLowerCase().includes(search)
-            }).map(image => (
-                <div className='imageDetails'>
-                 <img src={image.src} alt='hotel'/>
-                 <span className='image-name'>{image.name}</span>
-                </div>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId='imageContainer'>
+            {(provided) => (
+                
+            
+            <div className='imageContainer' {...provided.droppableProps} ref={provided.innerRef}>
+                {imageDetails.filter(item => {
+                 return search.toLowerCase() === '' ? item : item.name.toLowerCase().includes(search)
+                }).map((image, index) => (
+                    <Draggable  key={image.id} draggableId={image.id.toString()} index={index}>
+                    {(provided) => (
+
+                   <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                    <div className='imageDetails' >
+                        <img src={image.src} alt='hotel'/>
+                        <span className='image-name'>{image.name}</span>
+                    </div>
+                    </div>
+                    )}
+                    </Draggable>
             ))}
-        </div>
-        
+            {provided.placeholder}
+            </div>
+        )}
+
+            </Droppable>
+        </DragDropContext>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import Gallery from "./components/Gallery";
+// import Gallery from "./components/Gallery";
 import "./index.css";
 import ClerkProviderWithRoutes from "./components/ClerkProviderWithRoutes";
 
