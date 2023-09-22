@@ -4,10 +4,11 @@ const Login = () => {
   return (
     <div className='login'>
         <form>
-            <input type='text'/>
-            <input type='password'/>
-            <button>Login</button>
-            <a href='/sign-in'>Sign In</a>
+            <h2>Welcome to the Gallery</h2>
+            <div className='link-btns'>
+                <a href='/Sign-in'>Sign in</a>
+                <a href='/protected'>Gallery</a>
+            </div>
         </form>
     </div>
   )
