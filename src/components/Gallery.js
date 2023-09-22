@@ -74,14 +74,20 @@ const Gallery = () => {
         }
     ])
 
+    const [search, setSearch] = useState('')
+
+    console.log(search)
+
 
   return (
     <div className=''>
-        <div className='hero'>
-            <input type='text' placeholder='search...'/>
+        <div className='hero' onChange={(e) => setSearch(e.target.value)}>
+            <input type='text' placeholder='search e.g house, movie'/>
         </div>
         <div className='imageContainer'>
-            {imageDetails.map(image => (
+            {imageDetails.filter(item => {
+                return search.toLowerCase() === '' ? item : item.name.toLowerCase().includes(search)
+            }).map(image => (
                 <div className='imageDetails'>
                  <img src={image.src} alt='hotel'/>
                  <span className='image-name'>{image.name}</span>
