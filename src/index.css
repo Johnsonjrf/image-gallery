@@ -111,6 +111,19 @@ a{
   gap: 1.5rem;
 }
 
+.sign-in{
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translateX(-50%);
+  transform: translateY();
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  
+}
+
 .link-btns{
   display: flex;
   gap: 1.5rem;
